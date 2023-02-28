@@ -16,33 +16,37 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Control, Controller } from "react-hook-form";
+import { Control, Controller, SetValueConfig } from "react-hook-form";
 import React, { useState } from "react";
 import { CustomizeThemeForm } from "@/pages/customize/index";
 
 type ColorSelectorProps = {
-  control: Control<CustomizeThemeForm>;
   name: keyof CustomizeThemeForm;
   label: string;
+  control: Control<CustomizeThemeForm>;
+  setValue: (
+    name: keyof CustomizeThemeForm,
+    value: string,
+    options?: SetValueConfig
+  ) => void;
 };
 
-const ColorSelector = ({ control, name, label }: ColorSelectorProps) => {
-  const [selectedColor, setSelectedColor] = useState("#000000");
+const ColorSelector = ({
+  name,
+  label,
+  control,
+  setValue,
+}: ColorSelectorProps) => {
   const [previousColor, setPreviousColor] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const handleColorPickerOpen = () => {
-    setPreviousColor(selectedColor);
+    setPreviousColor(control._formValues[name]);
     onOpen();
   };
 
   const handleColorPickerClose = () => {
-    setSelectedColor(previousColor);
-    onClose();
-  };
-
-  const handleColorSelect = () => {
-    setPreviousColor(selectedColor);
+    setValue(name, previousColor);
     onClose();
   };
 
@@ -63,6 +67,7 @@ const ColorSelector = ({ control, name, label }: ColorSelectorProps) => {
               backgroundColor={control._formValues[name]}
               onClick={handleColorPickerOpen}
               _hover={{ background: control._formValues[name] }}
+              border="1px"
             />
           </GridItem>
         </Grid>
@@ -96,7 +101,7 @@ const ColorSelector = ({ control, name, label }: ColorSelectorProps) => {
               <Button colorScheme="red" mr={3} onClick={handleColorPickerClose}>
                 Cancel
               </Button>
-              <Button onClick={handleColorSelect} colorScheme="blue">
+              <Button onClick={onClose} colorScheme="blue">
                 Apply
               </Button>
             </Flex>
