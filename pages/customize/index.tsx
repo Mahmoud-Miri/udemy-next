@@ -11,6 +11,8 @@ const tempInitialValues: CustomizeThemeForm = {
   secondaryColor: "#FF0000",
 };
 
+const hexColorRegex = /^#([A-Fa-f0-9]{6}|[A-Fa-f0-9]{3})$/;
+
 type ColorPickerProps = {
   initialValues: CustomizeThemeForm;
 };
@@ -21,7 +23,10 @@ export type CustomizeThemeForm = {
 };
 
 const customizeThemeSchema = yup.object().shape({
-  primaryColor: yup.string(),
+  primaryColor: yup.string().matches(hexColorRegex, "Invalid hex color value"),
+  secondaryColor: yup
+    .string()
+    .matches(hexColorRegex, "Invalid hex color value"),
 });
 
 const ThemeCustomizer: React.FC<ColorPickerProps> = ({
@@ -37,6 +42,7 @@ const ThemeCustomizer: React.FC<ColorPickerProps> = ({
   } = useForm<CustomizeThemeForm>({
     resolver: yupResolver(customizeThemeSchema),
     defaultValues: { ...initialValues },
+    mode: "onBlur",
   });
 
   const onSubmit = (data: CustomizeThemeForm) => {
@@ -58,12 +64,14 @@ const ThemeCustomizer: React.FC<ColorPickerProps> = ({
             label="Primary Color"
             control={control}
             setValue={setValue}
+            errors={errors}
           />
           <ColorSelector
             name="secondaryColor"
             label="Secondary Color"
             control={control}
             setValue={setValue}
+            errors={errors}
           />
           <Button
             type="submit"

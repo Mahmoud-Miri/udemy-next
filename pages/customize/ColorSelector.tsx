@@ -3,6 +3,7 @@ import {
   Divider,
   Flex,
   FormControl,
+  FormErrorMessage,
   FormLabel,
   Grid,
   GridItem,
@@ -16,7 +17,12 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import { Control, Controller, SetValueConfig } from "react-hook-form";
+import {
+  Control,
+  Controller,
+  FieldErrors,
+  SetValueConfig,
+} from "react-hook-form";
 import React, { useState } from "react";
 import { CustomizeThemeForm } from "@/pages/customize/index";
 
@@ -29,6 +35,7 @@ type ColorSelectorProps = {
     value: string,
     options?: SetValueConfig
   ) => void;
+  errors: FieldErrors<CustomizeThemeForm>;
 };
 
 const ColorSelector = ({
@@ -36,6 +43,7 @@ const ColorSelector = ({
   label,
   control,
   setValue,
+  errors,
 }: ColorSelectorProps) => {
   const [previousColor, setPreviousColor] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
@@ -52,26 +60,24 @@ const ColorSelector = ({
 
   return (
     <>
-      <FormControl id={name} mb={2}>
-        <Grid
-          templateColumns="repeat(10, 1fr)"
-          alignItems="center"
-          justifyItems="left"
-        >
-          <GridItem>
-            <FormLabel>{label}</FormLabel>
-          </GridItem>
-          <GridItem>
-            <Button
-              size="md"
-              backgroundColor={control._formValues[name]}
-              onClick={handleColorPickerOpen}
-              _hover={{ background: control._formValues[name] }}
-              border="1px"
-            />
-          </GridItem>
-        </Grid>
-      </FormControl>
+      <Grid
+        templateColumns="repeat(10, 1fr)"
+        alignItems="center"
+        justifyItems="left"
+      >
+        <GridItem>
+          <FormLabel>{label}</FormLabel>
+        </GridItem>
+        <GridItem>
+          <Button
+            size="md"
+            backgroundColor={control._formValues[name]}
+            onClick={handleColorPickerOpen}
+            _hover={{ background: control._formValues[name] }}
+            border="1px"
+          />
+        </GridItem>
+      </Grid>
 
       <Modal isOpen={isOpen} onClose={handleColorPickerClose}>
         <ModalOverlay />
@@ -86,13 +92,16 @@ const ColorSelector = ({
                 control={control}
                 render={({ field }) => <Input type="color" mr={4} {...field} />}
               />
-              <Controller
-                name={name}
-                control={control}
-                render={({ field }) => (
-                  <Input placeholder="Hex color value" {...field} />
-                )}
-              />
+              <FormControl isInvalid={!!errors[name]}>
+                <Controller
+                  name={name}
+                  control={control}
+                  render={({ field }) => (
+                    <Input placeholder="Hex color value" {...field} />
+                  )}
+                />
+                <FormErrorMessage>{errors[name]?.message}</FormErrorMessage>
+              </FormControl>
             </Flex>
           </ModalBody>
           <Divider mt={4} />
@@ -101,7 +110,11 @@ const ColorSelector = ({
               <Button colorScheme="red" mr={3} onClick={handleColorPickerClose}>
                 Cancel
               </Button>
-              <Button onClick={onClose} colorScheme="blue">
+              <Button
+                onClick={onClose}
+                colorScheme="blue"
+                isDisabled={!!errors[name]}
+              >
                 Apply
               </Button>
             </Flex>
