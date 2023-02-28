@@ -17,12 +17,7 @@ import {
   ModalOverlay,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  Control,
-  Controller,
-  FieldErrors,
-  SetValueConfig,
-} from "react-hook-form";
+import { Control, Controller, useController } from "react-hook-form";
 import React, { useState } from "react";
 import { CustomizeThemeForm } from "@/pages/customize/index";
 
@@ -30,31 +25,25 @@ type ColorSelectorProps = {
   name: keyof CustomizeThemeForm;
   label: string;
   control: Control<CustomizeThemeForm>;
-  setValue: (
-    name: keyof CustomizeThemeForm,
-    value: string,
-    options?: SetValueConfig
-  ) => void;
-  errors: FieldErrors<CustomizeThemeForm>;
 };
 
-const ColorSelector = ({
-  name,
-  label,
-  control,
-  setValue,
-  errors,
-}: ColorSelectorProps) => {
+const ColorSelector = ({ name, label, control }: ColorSelectorProps) => {
   const [previousColor, setPreviousColor] = useState("");
   const { isOpen, onOpen, onClose } = useDisclosure();
 
+  const {
+    field,
+    formState: { errors },
+  } = useController({ name, control });
+
   const handleColorPickerOpen = () => {
-    setPreviousColor(control._formValues[name]);
+    setPreviousColor(field.value);
     onOpen();
   };
 
   const handleColorPickerClose = () => {
-    setValue(name, previousColor);
+    field.onChange(previousColor);
+    field.onBlur();
     onClose();
   };
 
@@ -71,16 +60,16 @@ const ColorSelector = ({
         <GridItem>
           <Button
             size="md"
-            backgroundColor={control._formValues[name]}
+            backgroundColor={field.value}
             onClick={handleColorPickerOpen}
-            _hover={{ background: control._formValues[name] }}
+            _hover={{ background: field.value }}
             border="1px"
           />
         </GridItem>
       </Grid>
 
       <Modal isOpen={isOpen} onClose={handleColorPickerClose}>
-        <ModalOverlay />
+        <ModalOverlay backdropFilter="auto" backdropBlur="sm" />
         <ModalContent>
           <ModalHeader pb={1}>Select Color</ModalHeader>
           <ModalCloseButton />

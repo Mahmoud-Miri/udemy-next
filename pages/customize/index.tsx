@@ -34,15 +34,10 @@ const ThemeCustomizer: React.FC<ColorPickerProps> = ({
 }) => {
   const toast = useToast();
 
-  const {
-    control,
-    handleSubmit,
-    setValue,
-    formState: { errors },
-  } = useForm<CustomizeThemeForm>({
+  const { control, handleSubmit } = useForm<CustomizeThemeForm>({
     resolver: yupResolver(customizeThemeSchema),
     defaultValues: { ...initialValues },
-    mode: "onBlur",
+    mode: "onChange",
   });
 
   const onSubmit = (data: CustomizeThemeForm) => {
@@ -63,15 +58,11 @@ const ThemeCustomizer: React.FC<ColorPickerProps> = ({
             name="primaryColor"
             label="Primary Color"
             control={control}
-            setValue={setValue}
-            errors={errors}
           />
           <ColorSelector
             name="secondaryColor"
             label="Secondary Color"
             control={control}
-            setValue={setValue}
-            errors={errors}
           />
           <Button
             type="submit"
