@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { Control, Controller, useController } from "react-hook-form";
 import React, { useState } from "react";
-import { CustomizeThemeForm } from "@/pages/customize/index";
+import { CustomizeThemeForm } from "./index";
 
 type ColorSelectorProps = {
   name: keyof CustomizeThemeForm;
@@ -55,7 +55,7 @@ const ColorSelector = ({ name, label, control }: ColorSelectorProps) => {
         justifyItems="left"
       >
         <GridItem>
-          <FormLabel>{label}</FormLabel>
+          <FormLabel htmlFor={`${name}-btn`}>{label}</FormLabel>
         </GridItem>
         <GridItem>
           <Button
@@ -64,6 +64,7 @@ const ColorSelector = ({ name, label, control }: ColorSelectorProps) => {
             onClick={handleColorPickerOpen}
             _hover={{ background: field.value }}
             border="1px"
+            id={`${name}-btn`}
           />
         </GridItem>
       </Grid>
@@ -86,7 +87,11 @@ const ColorSelector = ({ name, label, control }: ColorSelectorProps) => {
                   name={name}
                   control={control}
                   render={({ field }) => (
-                    <Input placeholder="Hex color value" {...field} />
+                    <Input
+                      aria-label="Hex color value"
+                      placeholder="Hex color value"
+                      {...field}
+                    />
                   )}
                 />
                 <FormErrorMessage>{errors[name]?.message}</FormErrorMessage>

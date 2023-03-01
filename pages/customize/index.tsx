@@ -4,7 +4,7 @@ import { Box, Button, Stack, useToast } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ColorSelector from "@/pages/customize/ColorSelector";
+import ColorSelector from "./ColorSelector";
 
 const tempInitialValues: CustomizeThemeForm = {
   primaryColor: "#000000",
