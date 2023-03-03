@@ -4,6 +4,7 @@ import {
   Box,
   BoxProps,
   Button,
+  Center,
   CloseButton,
   Drawer,
   DrawerContent,
@@ -19,6 +20,7 @@ import {
   MenuItem,
   MenuList,
   Text,
+  useBreakpointValue,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -189,17 +191,15 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Text
-        display={{ base: "flex", md: "none" }}
-        fontSize="2xl"
-        fontFamily="monospace"
-        fontWeight="bold"
-      >
-        Logo
-      </Text>
+      <Center display={{ base: "flex", md: "none" }}>
+        <Image alt="logo" src="/logo_transparent.png" width={75} height={75} />
+      </Center>
 
       <HStack spacing={{ base: "0", md: "6" }}>
-        <Button onClick={toggleColorMode}>
+        <Button
+          onClick={toggleColorMode}
+          mr={useBreakpointValue({ base: "1rem", md: 0 })}
+        >
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
         <Flex alignItems={"center"}>
