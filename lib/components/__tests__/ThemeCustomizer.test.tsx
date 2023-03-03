@@ -1,5 +1,5 @@
 import { render, screen, fireEvent } from "@testing-library/react";
-import ThemeCustomizer, { CustomizeThemeForm } from "../index";
+import ThemeCustomizer, { CustomizeThemeForm } from "../../../pages/customize";
 
 describe("ThemeCustomizer", () => {
   const initialValues: CustomizeThemeForm = {

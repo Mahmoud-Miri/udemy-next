@@ -4,7 +4,7 @@ import { Box, Button, Stack, useToast } from "@chakra-ui/react";
 import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
-import ColorSelector from "./ColorSelector";
+import ColorSelector from "../../lib/components/ColorSelector";
 import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
 const tempInitialValues: CustomizeThemeForm = {

@@ -3,13 +3,18 @@ import type { AppProps } from "next/app";
 import { ChakraProvider } from "@chakra-ui/react";
 import theme from "@/lib/theme/theme";
 import { UserProvider } from "@auth0/nextjs-auth0/client";
+import SidebarWithHeader from "@/lib/components/SidebarWithHeader";
 
-export default function App({ Component, pageProps }: AppProps) {
+const App = ({ Component, pageProps }: AppProps) => {
   return (
     <UserProvider>
       <ChakraProvider theme={theme}>
-        <Component {...pageProps} />
+        <SidebarWithHeader>
+          <Component {...pageProps} />
+        </SidebarWithHeader>
       </ChakraProvider>
     </UserProvider>
   );
-}
+};
+
+export default App;

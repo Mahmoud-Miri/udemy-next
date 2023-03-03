@@ -19,7 +19,7 @@ import {
 } from "@chakra-ui/react";
 import { Control, Controller, useController } from "react-hook-form";
 import React, { useState } from "react";
-import { CustomizeThemeForm } from "./index";
+import { CustomizeThemeForm } from "../../pages/customize";
 
 type ColorSelectorProps = {
   name: keyof CustomizeThemeForm;
