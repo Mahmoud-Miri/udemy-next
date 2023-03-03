@@ -5,6 +5,7 @@ import * as yup from "yup";
 import { useForm } from "react-hook-form";
 import { yupResolver } from "@hookform/resolvers/yup";
 import ColorSelector from "./ColorSelector";
+import { withPageAuthRequired } from "@auth0/nextjs-auth0/client";
 
 const tempInitialValues: CustomizeThemeForm = {
   primaryColor: "#000000",
@@ -79,4 +80,4 @@ const ThemeCustomizer: React.FC<ColorPickerProps> = ({
   );
 };
 
-export default ThemeCustomizer;
+export default withPageAuthRequired(ThemeCustomizer);
