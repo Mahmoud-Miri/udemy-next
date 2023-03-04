@@ -25,34 +25,33 @@ import {
   useColorModeValue,
   useDisclosure,
 } from "@chakra-ui/react";
-import {
-  FiChevronDown,
-  FiCompass,
-  FiHome,
-  FiMenu,
-  FiSettings,
-  FiStar,
-  FiTrendingUp,
-} from "react-icons/fi";
+import { FiChevronDown, FiMenu } from "react-icons/fi";
 import { IconType } from "react-icons";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
-import { FaDoorClosed, FaDoorOpen } from "react-icons/fa";
+import {
+  FaAddressCard,
+  FaDoorClosed,
+  FaDoorOpen,
+  FaHome,
+  FaPalette,
+  FaSlidersH,
+  FaStar,
+} from "react-icons/fa";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Link from "next/link";
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
-
   href: string;
 }
 const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FiHome, href: "/" },
-  { name: "Customize", icon: FiTrendingUp, href: "/customize" },
-  { name: "About Me", icon: FiCompass, href: "/about" },
-  { name: "Favourites", icon: FiStar, href: "/" },
-  { name: "Settings", icon: FiSettings, href: "/" },
+  { name: "Home", icon: FaHome, href: "/" },
+  { name: "Customize", icon: FaPalette, href: "/customize" },
+  { name: "About Me", icon: FaAddressCard, href: "/about" },
+  { name: "Favourites", icon: FaStar, href: "/" },
+  { name: "Settings", icon: FaSlidersH, href: "/" },
 ];
 
 export default function SidebarWithHeader({
