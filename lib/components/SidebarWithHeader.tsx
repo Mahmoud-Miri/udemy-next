@@ -223,7 +223,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
             value: "en",
           }}
         />
-        <Flex alignItems={"center"}>
+        <Flex alignItems="center">
           <Menu>
             <MenuButton
               py={2}
@@ -231,7 +231,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               _focus={{ boxShadow: "none" }}
             >
               <HStack>
-                <Avatar size={"sm"} src={user?.picture ?? ""} />
+                <Avatar size="sm" src={user?.picture ?? ""} />
 
                 <Box display={{ base: "none", md: "flex" }}>
                   <FiChevronDown />
@@ -285,7 +285,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
                     : router.push("/api/auth/login");
                 }}
               >
-                <Flex alignItems={"center"}>
+                <Flex alignItems="center">
                   {user ? <FaDoorOpen size={16} /> : <FaDoorClosed />}
                   <Text ml={2}>
                     {user ? translate("generic.logout") : "Login"}
