@@ -6,8 +6,11 @@ import { UserProvider } from "@auth0/nextjs-auth0/client";
 import SidebarWithHeader from "@/lib/components/SidebarWithHeader";
 import i18n from "../lib/i18/i18n-init";
 import { I18nextProvider } from "react-i18next";
+import initDatadog from "@/lib/datadog/dd-init";
 
 const App = ({ Component, pageProps }: AppProps) => {
+  initDatadog();
+
   return (
     <UserProvider>
       <ChakraProvider theme={theme}>

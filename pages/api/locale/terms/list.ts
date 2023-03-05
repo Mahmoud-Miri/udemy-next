@@ -3,6 +3,7 @@ import { NextApiHandler } from "next";
 import fs from "fs";
 import { ListTermsResponse } from "@/lib/i18/types";
 import getConfig from "next/config";
+import { datadogLogs } from "@datadog/browser-logs";
 
 const handler: NextApiHandler = async (req, res) => {
   const { languages } = req.body;
@@ -38,6 +39,7 @@ const handler: NextApiHandler = async (req, res) => {
       const cwd = process.cwd();
       console.log("current working dir:", cwd);
       console.log(`translations for ${language}:`, translations);
+      datadogLogs.logger.info(`current working dir: ${cwd}`);
 
       fs.writeFileSync(
         `./translations/${language}.json`,
