@@ -35,6 +35,8 @@ const handler: NextApiHandler = async (req, res) => {
         translations[term.term] = term.translation.content;
       });
 
+      const cwd = process.cwd();
+      console.log("current working dir:", cwd);
       console.log(`translations for ${language}:`, translations);
 
       fs.writeFileSync(
