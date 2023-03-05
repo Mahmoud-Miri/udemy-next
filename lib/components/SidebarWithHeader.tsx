@@ -20,7 +20,6 @@ import {
   MenuItem,
   MenuList,
   Text,
-  useBreakpointValue,
   useColorMode,
   useColorModeValue,
   useDisclosure,
@@ -30,7 +29,6 @@ import { IconType } from "react-icons";
 import { useUser } from "@auth0/nextjs-auth0/client";
 import { useRouter } from "next/router";
 import {
-  FaAddressCard,
   FaDoorClosed,
   FaDoorOpen,
   FaHome,
@@ -40,25 +38,18 @@ import {
 } from "react-icons/fa";
 import { MoonIcon, SunIcon } from "@chakra-ui/icons";
 import Link from "next/link";
+import { useTranslation } from "react-i18next";
+import i18n from "i18next";
+import { FlagIcon } from "react-flag-kit";
+import { Select } from "chakra-react-select";
 
 interface LinkItemProps {
   name: string;
   icon: IconType;
   href: string;
 }
-const LinkItems: Array<LinkItemProps> = [
-  { name: "Home", icon: FaHome, href: "/" },
-  { name: "Customize", icon: FaPalette, href: "/customize" },
-  { name: "About Me", icon: FaAddressCard, href: "/about" },
-  { name: "Favourites", icon: FaStar, href: "/" },
-  { name: "Settings", icon: FaSlidersH, href: "/" },
-];
 
-export default function SidebarWithHeader({
-  children,
-}: {
-  children: ReactNode;
-}) {
+const SidebarWithHeader = ({ children }: { children: ReactNode }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   return (
     <Box minH="100vh" bg={useColorModeValue("gray.100", "gray.900")}>
@@ -86,13 +77,25 @@ export default function SidebarWithHeader({
       </Box>
     </Box>
   );
-}
+};
 
 interface SidebarProps extends BoxProps {
   onClose: () => void;
 }
 
 const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
+  const { t: translate } = useTranslation();
+
+  const LinkItems: Array<LinkItemProps> = [
+    { name: translate("generic.home"), icon: FaHome, href: "/" },
+    {
+      name: translate("generic.customize"),
+      icon: FaPalette,
+      href: "/customize",
+    },
+    { name: translate("generic.favourites"), icon: FaStar, href: "/" },
+    { name: translate("generic.settings"), icon: FaSlidersH, href: "/" },
+  ];
   return (
     <Box
       transition="3s ease"
@@ -170,6 +173,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
   const { user } = useUser();
   const { colorMode, toggleColorMode } = useColorMode();
   const router = useRouter();
+  const { t: translate } = useTranslation();
+
   return (
     <Flex
       ml={{ base: 0, md: 60 }}
@@ -194,13 +199,34 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         <Image alt="logo" src="/logo_transparent.png" width={75} height={75} />
       </Center>
 
-      <HStack spacing={{ base: "0", md: "6" }}>
+      <HStack spacing={{ base: "1rem", md: "6" }}>
         <Button
+          size="sm"
           onClick={toggleColorMode}
-          mr={useBreakpointValue({ base: "1rem", md: 0 })}
+          // mr={useBreakpointValue({ base: "1rem", md: 0 })}
         >
           {colorMode === "light" ? <MoonIcon /> : <SunIcon />}
         </Button>
+        <Select
+          instanceId="languageSelect1"
+          options={[
+            { label: <FlagIcon code="GB" />, value: "en" },
+            { label: <FlagIcon code="IR" />, value: "fa" },
+          ]}
+          size="sm"
+          components={{
+            DropdownIndicator: () => null,
+            IndicatorSeparator: () => null,
+          }}
+          onChange={async (e) => {
+            const selectedLanguage = e?.value;
+            await i18n.changeLanguage(selectedLanguage);
+          }}
+          defaultValue={{
+            label: <FlagIcon code="GB" />,
+            value: "en",
+          }}
+        />
         <Flex alignItems={"center"}>
           <Menu>
             <MenuButton
@@ -220,9 +246,8 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>Profile</MenuItem>
-              <MenuItem>Settings</MenuItem>
-              <MenuItem>Billing</MenuItem>
+              <MenuItem>{translate("generic.profile")}</MenuItem>
+              <MenuItem>{translate("generic.settings")}</MenuItem>
               <MenuDivider />
               <MenuItem
                 onClick={() => {
@@ -233,7 +258,9 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               >
                 <Flex alignItems={"center"}>
                   {user ? <FaDoorOpen size={16} /> : <FaDoorClosed />}
-                  <Text ml={2}>{user ? "Logout" : "Login"}</Text>
+                  <Text ml={2}>
+                    {user ? translate("generic.logout") : "Login"}
+                  </Text>
                 </Flex>
               </MenuItem>
             </MenuList>
@@ -243,3 +270,5 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
     </Flex>
   );
 };
+
+export default SidebarWithHeader;
