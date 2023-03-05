@@ -35,6 +35,8 @@ const handler: NextApiHandler = async (req, res) => {
         translations[term.term] = term.translation.content;
       });
 
+      console.log(`translations for ${language}:`, translations);
+
       fs.writeFileSync(
         `./translations/${language}.json`,
         JSON.stringify(translations)
