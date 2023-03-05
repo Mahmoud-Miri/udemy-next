@@ -1,6 +1,6 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
-import axios from "axios";
+import axios from "lib/api/axios";
 
 (async () => {
   const { data: languageCodes } = await axios.get("/api/locale/languages/list");
