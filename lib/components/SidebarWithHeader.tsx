@@ -4,7 +4,6 @@ import {
   Box,
   BoxProps,
   Button,
-  Center,
   CloseButton,
   Drawer,
   DrawerContent,
@@ -145,7 +144,7 @@ const NavItem = ({ icon, children, href, ...rest }: NavItemProps) => {
         role="group"
         cursor="pointer"
         _hover={{
-          bg: "cyan.400",
+          bg: "red.400",
           color: "white",
         }}
         {...rest}
@@ -195,10 +194,6 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         icon={<FiMenu />}
       />
 
-      <Center display={{ base: "flex", md: "none" }}>
-        <Image alt="logo" src="/logo_transparent.png" width={75} height={75} />
-      </Center>
-
       <HStack spacing={{ base: "1rem", md: "6" }}>
         <Button
           size="sm"
@@ -247,10 +242,43 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
               bg={useColorModeValue("white", "gray.900")}
               borderColor={useColorModeValue("gray.200", "gray.700")}
             >
-              <MenuItem>{translate("generic.profile")}</MenuItem>
-              <MenuItem>{translate("generic.settings")}</MenuItem>
+              <MenuItem
+                bg={useColorModeValue("white", "gray.900")}
+                _hover={{
+                  bg: "red.400",
+                  color: "white",
+                }}
+                _focus={{
+                  bg: "red.400",
+                  color: "white",
+                }}
+              >
+                {translate("generic.profile")}
+              </MenuItem>
+              <MenuItem
+                bg={useColorModeValue("white", "gray.900")}
+                _hover={{
+                  bg: "red.400",
+                  color: "white",
+                }}
+                _focus={{
+                  bg: "red.400",
+                  color: "white",
+                }}
+              >
+                {translate("generic.settings")}
+              </MenuItem>
               <MenuDivider />
               <MenuItem
+                bg={useColorModeValue("white", "gray.900")}
+                _hover={{
+                  bg: "red.400",
+                  color: "white",
+                }}
+                _focus={{
+                  bg: "red.400",
+                  color: "white",
+                }}
                 onClick={() => {
                   user
                     ? router.push("/api/auth/logout")
