@@ -6,6 +6,7 @@ const initDatadog = () => {
     clientToken: getConfig().publicRuntimeConfig.DD_CLIENT_TOKEN,
     site: "datadoghq.eu",
     forwardErrorsToLogs: true,
+    silentMultipleInit: true,
   });
 };
 
