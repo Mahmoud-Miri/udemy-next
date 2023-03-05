@@ -209,6 +209,7 @@ const MobileNav = ({ onOpen, ...rest }: MobileProps) => {
         </Button>
         <Select
           instanceId="languageSelect1"
+          isSearchable={false}
           options={[
             { label: <FlagIcon code="GB" />, value: "en" },
             { label: <FlagIcon code="IR" />, value: "fa" },
