@@ -26,7 +26,7 @@ const HomePage = () => {
   return (
     <Box>
       <Text fontSize="xl" fontWeight="semibold">
-        Welcome!
+        Welcome {user.nickname}!
       </Text>
     </Box>
   );
