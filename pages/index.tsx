@@ -1,8 +1,10 @@
 import { Box, Flex, Spinner, Text } from "@chakra-ui/react";
 import { useUser } from "@auth0/nextjs-auth0/client";
+import { useRouter } from "next/router";
 
 const HomePage = () => {
   const { user, isLoading } = useUser();
+  const router = useRouter();
 
   if (isLoading)
     return (
@@ -11,6 +13,7 @@ const HomePage = () => {
       </Flex>
     );
 
+  // if (!user) router.push("/api/auth/login");
   if (!user)
     return (
       <Box>

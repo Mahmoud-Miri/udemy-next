@@ -30,9 +30,9 @@ const customizeThemeSchema = yup.object().shape({
     .matches(hexColorRegex, "Invalid hex color value"),
 });
 
-const ThemeCustomizer: React.FC<ColorPickerProps> = ({
+const ThemeCustomizer = ({
   initialValues = tempInitialValues,
-}) => {
+}: ColorPickerProps) => {
   const toast = useToast();
 
   const { control, handleSubmit } = useForm<CustomizeThemeForm>({
