@@ -94,6 +94,7 @@ const SidebarContent = ({ onClose, ...rest }: SidebarProps) => {
     },
     { name: translate("generic.favourites"), icon: FaStar, href: "/" },
     { name: translate("generic.settings"), icon: FaSlidersH, href: "/" },
+    { name: translate("react-table"), icon: FaSlidersH, href: "/react-table" },
   ];
   return (
     <Box
